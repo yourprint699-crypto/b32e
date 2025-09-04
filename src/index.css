@@ -683,19 +683,10 @@ header {
 .section-transition {
     position: relative;
     padding: clamp(60px, 12vw, 120px) 0;
-    background: var(--bg-dark-primary);
+    background: transparent; /* Let the body gradient show through */
 }
 
-.section-transition::before {
-    content: '';
-    position: absolute;
-    top: clamp(-30px, -6vw, -60px);
-    left: 0;
-    right: 0;
-    height: clamp(60px, 12vw, 120px);
-    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.1));
-    pointer-events: none;
-}
+/* Remove the old transition overlay as we now have seamless backgrounds */
 
 /* Responsive video styling */
 iframe {
@@ -936,17 +927,71 @@ body.mobile-menu-open {
 
 /* Enhanced section backgrounds with responsive gradients */
 .section-dark {
-    background: var(--bg-dark-primary);
+    background: linear-gradient(180deg, 
+        rgba(10, 15, 28, 0.95) 0%, 
+        rgba(0, 0, 0, 0.98) 50%, 
+        rgba(26, 31, 46, 0.95) 100%);
     position: relative;
     min-height: 100vh;
     min-height: 100dvh;
 }
 
 .section-dark-alt {
-    background: var(--bg-dark-secondary);
+    background: linear-gradient(180deg, 
+        rgba(26, 31, 46, 0.95) 0%, 
+        rgba(0, 0, 0, 0.98) 50%, 
+        rgba(10, 15, 28, 0.95) 100%);
     position: relative;
     min-height: 100vh;
     min-height: 100dvh;
+}
+
+/* Seamless section transition overlays */
+.section-dark::before,
+.section-dark-alt::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: clamp(80px, 15vw, 150px);
+    background: linear-gradient(180deg, 
+        rgba(0, 0, 0, 0.8) 0%, 
+        rgba(0, 0, 0, 0.4) 50%, 
+        transparent 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.section-dark::after,
+.section-dark-alt::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: clamp(80px, 15vw, 150px);
+    background: linear-gradient(0deg, 
+        rgba(0, 0, 0, 0.8) 0%, 
+        rgba(0, 0, 0, 0.4) 50%, 
+        transparent 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Enhanced seamless blending for alternating sections */
+.section-dark + .section-dark-alt::before {
+    background: linear-gradient(180deg, 
+        rgba(10, 15, 28, 0.9) 0%, 
+        rgba(0, 0, 0, 0.6) 50%, 
+        transparent 100%);
+}
+
+.section-dark-alt + .section-dark::before {
+    background: linear-gradient(180deg, 
+        rgba(26, 31, 46, 0.9) 0%, 
+        rgba(0, 0, 0, 0.6) 50%, 
+        transparent 100%);
 }
 
 /* Responsive cinematic overlay effects */
@@ -956,9 +1001,39 @@ body.mobile-menu-open {
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
+    background: 
+        radial-gradient(ellipse at center top, transparent 0%, rgba(0, 0, 0, 0.2) 40%, rgba(0, 0, 0, 0.4) 100%),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%);
     pointer-events: none;
-    opacity: 0.8;
+    opacity: 0.9;
+    z-index: 2;
+}
+
+/* Enhanced page-level background for seamless flow */
+body {
+    background: linear-gradient(180deg, 
+        rgba(10, 15, 28, 1) 0%, 
+        rgba(0, 0, 0, 1) 25%, 
+        rgba(26, 31, 46, 1) 50%, 
+        rgba(0, 0, 0, 1) 75%, 
+        rgba(10, 15, 28, 1) 100%);
+    background-attachment: fixed;
+    background-size: 100% 400vh;
+}
+
+/* Mobile background optimization */
+@media (max-width: 767px) {
+    body {
+        background-attachment: scroll; /* Better performance on mobile */
+        background-size: 100% 300vh;
+    }
+    
+    .section-dark::before,
+    .section-dark-alt::before,
+    .section-dark::after,
+    .section-dark-alt::after {
+        height: clamp(60px, 12vw, 100px);
+    }
 }
 
 /* Responsive form styling */
