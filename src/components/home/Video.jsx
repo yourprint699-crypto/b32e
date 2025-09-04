@@ -11,9 +11,17 @@ const Video = () => {
         loading="lazy"
       />
 
-      {/* Main background video */}
+      {/* Main background video with enhanced mobile coverage */}
       <video
         className="h-full w-full object-cover absolute inset-0 z-10"
+        style={{
+          objectFit: 'cover',
+          objectPosition: 'center center',
+          minWidth: '100%',
+          minHeight: '100%',
+          width: 'auto',
+          height: 'auto'
+        }}
         autoPlay
         loop
         muted
