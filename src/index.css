@@ -1034,6 +1034,17 @@ body {
     .section-dark-alt::after {
         height: clamp(60px, 12vw, 100px);
     }
+    
+    /* Prevent hero inline video from zooming on mobile */
+    .hero-inline-video {
+        transform: none !important;
+        object-fit: cover !important;
+        object-position: center center !important;
+        width: 100% !important;
+        height: 100% !important;
+        min-width: auto !important;
+        min-height: auto !important;
+    }
 }
 
 /* Responsive form styling */
@@ -1916,3 +1927,5 @@ iframe {
         max-width: 400px;
     }
 }
+
+
