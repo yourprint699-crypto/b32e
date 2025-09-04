@@ -11,7 +11,7 @@ const HomeHeroText = () => {
           <span>we</span>
           <div className="h-[8vw] w-[20vw] sm:h-[7vw] sm:w-[16vw] rounded-full overflow-hidden mx-2 sm:mx-2 glass glow-accent flex-shrink-0 my-1 sm:my-0">
             <video
-              className="h-full w-full object-cover"
+              className="h-full w-full object-cover hero-inline-video"
               autoPlay
               loop
               muted
