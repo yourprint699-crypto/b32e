@@ -50,9 +50,8 @@ const Home = () => {
       {/* Scrollable content */}
       <div className='relative z-20'>
         {/* Hero Section */}
-        <div ref={heroSectionRef} className='h-screen h-[100dvh] w-screen relative pb-4 sm:pb-5 flex flex-col justify-between hero-content' style={{ paddingTop: 'clamp(100px, 18vw, 140px)' }}>
+        <div ref={heroSectionRef} className='h-screen h-[100dvh] w-screen relative flex flex-col hero-content'>
           <HomeHeroText />
-          <HomeBottomText />
         </div>
         
         {/* Why Us Section */}
