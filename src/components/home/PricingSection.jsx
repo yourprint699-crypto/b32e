@@ -2,6 +2,7 @@ import React, { useRef } from 'react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/all'
+import BeforeAfterSlider from '../common/BeforeAfterSlider'
 
 const PricingSection = () => {
   const sectionRef = useRef(null)
@@ -185,23 +186,32 @@ const PricingSection = () => {
 
         {/* Additional Info */}
         <div className='text-center component-margin'>
-          <div className='floating-panel-dark max-width-content'>
-            <p className='font-[font1] text-responsive text-layer-1 mb-4 sm:mb-6'>
-              Tous les forfaits incluent une consultation gratuite et un devis personnalisé.
-            </p>
-            <div className='flex flex-col sm:flex-row justify-center items-center space-y-3 sm:space-y-0 sm:space-x-6 lg:space-x-8'>
-              <div className='flex items-center space-x-2 sm:space-x-3'>
-                <span className='text-lg sm:text-xl micro-bounce glow-accent'>💎</span>
-                <span className='font-[font1] text-sm sm:text-base text-layer-1'>Premium Quality</span>
+          <div className='responsive-grid-2 max-width-wide items-center'>
+            {/* Left Side - Feature Box */}
+            <div className='floating-panel-dark'>
+              <div className='flex flex-col sm:flex-row justify-center sm:justify-start items-center space-y-3 sm:space-y-0 sm:space-x-6 lg:space-x-8'>
+                <div className='flex items-center space-x-2 sm:space-x-3'>
+                  <span className='text-lg sm:text-xl micro-bounce glow-accent'>💎</span>
+                  <span className='font-[font1] text-sm sm:text-base text-layer-1'>Premium Quality</span>
+                </div>
+                <div className='flex items-center space-x-2 sm:space-x-3'>
+                  <span className='text-lg sm:text-xl micro-bounce glow-accent'>⚡</span>
+                  <span className='font-[font1] text-sm sm:text-base text-layer-1'>Fast Delivery</span>
+                </div>
+                <div className='flex items-center space-x-2 sm:space-x-3'>
+                  <span className='text-lg sm:text-xl micro-bounce glow-accent'>🎯</span>
+                  <span className='font-[font1] text-sm sm:text-base text-layer-1'>100% Satisfaction</span>
+                </div>
               </div>
-              <div className='flex items-center space-x-2 sm:space-x-3'>
-                <span className='text-lg sm:text-xl micro-bounce glow-accent'>⚡</span>
-                <span className='font-[font1] text-sm sm:text-base text-layer-1'>Fast Delivery</span>
-              </div>
-              <div className='flex items-center space-x-2 sm:space-x-3'>
-                <span className='text-lg sm:text-xl micro-bounce glow-accent'>🎯</span>
-                <span className='font-[font1] text-sm sm:text-base text-layer-1'>100% Satisfaction</span>
-              </div>
+            </div>
+
+            {/* Right Side - Before/After Slider */}
+            <div className='floating-panel-dark'>
+              <BeforeAfterSlider 
+                beforeImage="https://images.pexels.com/photos/1024993/pexels-photo-1024993.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop"
+                afterImage="https://images.pexels.com/photos/1024993/pexels-photo-1024993.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop&sat=20&con=15&bri=10"
+                className="video-glass gpu-accelerated"
+              />
             </div>
           </div>
         </div>
