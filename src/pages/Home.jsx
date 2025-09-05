@@ -73,7 +73,7 @@ const Home = () => {
       <Header />
       
       {/* Fixed video background */}
-      <div className='h-screen h-[100dvh] w-screen fixed top-0 left-0 z-0'>
+      <div className='h-screen h-[100dvh] w-screen fixed top-0 left-0 z-0 overflow-hidden'>
         <Video />
         {/* Dark overlay for better text readability */}
         <div className='absolute inset-0 bg-black/50 sm:bg-black/40 lg:bg-black/30 z-10'></div>
