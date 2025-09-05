@@ -5,22 +5,20 @@ const Video = () => {
     <div className="h-full w-full relative overflow-hidden">
       {/* Fallback image for when video is loading or fails */}
       <img
-        className="h-full w-full object-cover absolute inset-0 z-0"
+        className="absolute inset-0 w-full h-full object-cover z-0"
         src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop"
         alt="Creative workspace background"
         loading="lazy"
       />
 
-      {/* Main background video with enhanced mobile coverage */}
+      {/* Main background video with proper aspect ratio and coverage */}
       <video
-        className="h-full w-full object-cover absolute inset-0 z-10 ios-video-fix"
+        className="absolute inset-0 w-full h-full object-cover z-10 ios-video-fix"
         style={{
           objectFit: 'cover',
           objectPosition: 'center center',
-          minWidth: '100%',
-          minHeight: '100%',
-          width: 'auto',
-          height: 'auto'
+          width: '100%',
+          height: '100%'
         }}
         autoPlay
         playsInline
@@ -36,6 +34,12 @@ const Video = () => {
         onLoadedData={(e) => {
           // Force play on iOS after video loads
           const video = e.target;
+          // Ensure video dimensions are properly set
+          video.style.width = '100%';
+          video.style.height = '100%';
+          video.style.objectFit = 'cover';
+          video.style.objectPosition = 'center center';
+          
           const playPromise = video.play();
           if (playPromise !== undefined) {
             playPromise.catch(error => {
