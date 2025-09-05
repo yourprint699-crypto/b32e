@@ -6,6 +6,7 @@ import Header from '../components/common/Header'
 import WhyUsSection from '../components/home/WhyUsSection'
 import PortfolioSection from '../components/home/PortfolioSection'
 import StatsSection from '../components/home/StatsSection'
+import PricingSection from '../components/home/PricingSection'
 import ServicesSection from '../components/home/ServicesSection'
 import ProcessSection from '../components/home/ProcessSection'
 import CTASection from '../components/home/CTASection'
@@ -93,6 +94,9 @@ const Home = () => {
         
         {/* Stats Section */}
         <StatsSection />
+        
+        {/* Pricing Section */}
+        <PricingSection />
         
         {/* Services Section */}
         <ServicesSection />
