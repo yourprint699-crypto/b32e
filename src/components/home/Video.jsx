@@ -13,7 +13,7 @@ const Video = () => {
 
       {/* Main background video with enhanced mobile coverage */}
       <video
-        className="h-full w-full object-cover absolute inset-0 z-10"
+        className="h-full w-full object-cover absolute inset-0 z-10 ios-video-fix"
         style={{
           objectFit: 'cover',
           objectPosition: 'center center',
@@ -23,19 +23,27 @@ const Video = () => {
           height: 'auto'
         }}
         autoPlay
+        playsInline
         loop
         muted
-        playsInline
-        preload="metadata"
+        preload="auto"
+        webkit-playsinline="true"
+        x-webkit-airplay="allow"
         onError={(e) => {
           console.warn('Video failed to load, falling back to image');
           e.target.style.display = 'none'; // Hide video if it fails to load
         }}
-        onLoadStart={() => {
-          // Optional: Add loading state handling
-        }}
-        onCanPlay={() => {
-          // Optional: Video is ready to play
+        onLoadedData={(e) => {
+          // Force play on iOS after video loads
+          const video = e.target;
+          const playPromise = video.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(error => {
+              console.warn('Video autoplay failed:', error);
+              // Fallback to image if autoplay fails
+              video.style.display = 'none';
+            });
+          }
         }}
       >
         <source

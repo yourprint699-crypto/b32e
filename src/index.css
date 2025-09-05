@@ -1641,6 +1641,31 @@ iframe {
     z-index: -1;
 }
 
+/* iOS video optimization */
+.ios-video-fix {
+  /* Force hardware acceleration on iOS */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  /* Ensure video plays inline on iOS */
+  -webkit-playsinline: true;
+  /* Prevent iOS from showing video controls */
+  -webkit-media-controls: none;
+  -webkit-media-controls-panel: none;
+  -webkit-media-controls-play-button: none;
+  -webkit-media-controls-start-playback-button: none;
+}
+
+/* iOS Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+  .ios-video-fix {
+    /* Additional iOS-specific optimizations */
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
+    mask-image: radial-gradient(white, black);
+  }
+}
+
 @media (max-width: 767px) {
     /* Enhanced mobile video coverage */
     .video-background,
@@ -1660,6 +1685,14 @@ iframe {
         height: 100dvh !important;
         width: 100vw !important;
     }
+  
+  /* iOS mobile video fixes */
+  .ios-video-fix {
+    /* Prevent iOS from pausing video on scroll */
+    -webkit-overflow-scrolling: auto;
+    /* Force video to stay in viewport */
+    position: fixed !important;
+  }
 }
 
 /* Responsive image lazy loading */

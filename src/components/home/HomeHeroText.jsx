@@ -11,12 +11,23 @@ const HomeHeroText = () => {
           <span>we</span>
           <div className="h-[8vw] w-[20vw] sm:h-[7vw] sm:w-[16vw] rounded-full overflow-hidden mx-2 sm:mx-2 glass glow-accent flex-shrink-0 my-1 sm:my-0">
             <video
-              className="h-full w-full object-cover hero-inline-video"
+              className="h-full w-full object-cover hero-inline-video ios-video-fix"
               autoPlay
+              playsInline
               loop
               muted
-              playsInline
-              preload="metadata"
+              preload="auto"
+              webkit-playsinline="true"
+              onLoadedData={(e) => {
+                // Force play on iOS after video loads
+                const video = e.target;
+                const playPromise = video.play();
+                if (playPromise !== undefined) {
+                  playPromise.catch(error => {
+                    console.warn('Inline video autoplay failed:', error);
+                  });
+                }
+              }}
             >
               <source src="/video.mp4" type="video/mp4" />
             </video>
