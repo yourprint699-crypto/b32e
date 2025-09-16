@@ -82,7 +82,7 @@ const AboutSection = () => {
                 <div className='aspect-square rounded-2xl sm:rounded-3xl overflow-hidden video-glass gpu-accelerated'>
                 <img 
                   src="https://images.pexels.com/photos/1024993/pexels-photo-1024993.jpeg?auto=compress&cs=tinysrgb&w=800&h=800&fit=crop"
-                  alt="K72 team at work"
+                  alt="Our Team in Action"
                     className='w-full h-full object-cover transition-transform duration-700 lazy-image'
                     loading="lazy"
                     onLoad={(e) => e.target.classList.add('loaded')}
