@@ -95,7 +95,7 @@ const TermsOfService = () => {
                 Intellectual Property
               </h2>
               <p className='font-[font1] text-responsive leading-relaxed text-layer-1'>
-                You retain ownership of your wedding footage. K72 Wedding Videography retains the right to use excerpts for promotional purposes unless otherwise specified in writing. We respect your privacy and will always seek permission before using your content publicly.
+                You retain full ownership of your original content. Amoura Works only provides editing services and does not claim ownership of your footage or materials. However, unless otherwise specified in writing, Amoura Works reserves the right to use excerpts of edited work for portfolio and promotional purposes. We value your privacy and will always seek your consent before showcasing your content publicly.
               </p>
             </section>
 
