@@ -78,7 +78,7 @@ const Footer = () => {
                   }}
                   className='font-[font1] text-sm sm:text-base lg:text-lg text-layer-1 interactive-hover text-left micro-bounce w-full text-left'
                 >
-                  Our Portfolio0
+                  Our Portfolio
                 </button>
               </li>
               <li>
