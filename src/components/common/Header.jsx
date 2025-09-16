@@ -238,7 +238,7 @@ const Header = () => {
           {/* Menu Footer */}
           <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-white/10">
             <p className="text-xs text-gray-400 text-center">
-              © 2025 K72 Wedding Videography
+              © 2025 Amoura Works
             </p>
           </div>
         </div>
