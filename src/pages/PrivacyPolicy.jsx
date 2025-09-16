@@ -22,7 +22,7 @@ const PrivacyPolicy = () => {
                 Introduction
               </h2>
               <p className='font-[font1] text-responsive leading-relaxed text-layer-1'>
-                At K72 Wedding Videography, we are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, and safeguard your data when you use our services or visit our website.
+                At Amoura Works, your privacy is our priority. We are dedicated to safeguarding your personal information and maintaining the highest standards of data security. This Privacy Policy outlines how we collect, use, and protect your data when you access our website or use our services.
               </p>
             </section>
 
