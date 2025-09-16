@@ -71,8 +71,8 @@ const ContactSection = () => {
 
   const socialLinks = [
     { name: 'Instagram', url: 'https://instagram.com/s111khar', icon: '📷' },
-    { name: 'Facebook', url: 'https://facebook.com/k72wedding', icon: '📘' },
-    { name: 'LinkedIn', url: 'https://linkedin.com/company/k72wedding', icon: '💼' },
+    { name: 'Facebook', url: 'https://facebook.com/amouraworks', icon: '📘' },
+    { name: 'LinkedIn', url: 'https://linkedin.com/company/amouraworks', icon: '💼' },
   ];
 
   const handleChange = (e) => {
