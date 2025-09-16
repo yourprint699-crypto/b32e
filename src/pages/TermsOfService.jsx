@@ -32,7 +32,7 @@ const TermsOfService = () => {
                 Our Services
               </h2>
               <p className='font-[font1] text-responsive leading-relaxed text-layer-1 mb-3 sm:mb-4'>
-                K72 Wedding Videography provides professional wedding and event videography services including:
+                Amoura Works provides professional editing services including:
               </p>
               <ul className='font-[font1] text-responsive leading-relaxed text-layer-1 space-y-1 sm:space-y-2 list-disc list-inside'>
                 <li>Wedding ceremony and reception filming</li>
