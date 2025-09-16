@@ -99,12 +99,14 @@ const Header = () => {
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out w-full ${
           isScrolled ? 'backdrop-blur-md bg-black/20' : 'bg-transparent'
         }`}
-        style={{ zIndex: 1000 }}
+        style={{ zIndex: isMobileMenuOpen ? 30 : 1000 }}
       >
         {/* Subtle gradient fade for text readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-transparent pointer-events-none" />
         
-        <div className="container mx-auto py-4 sm:py-6 lg:py-8">
+        <div className={`container mx-auto py-4 sm:py-6 lg:py-8 transition-all duration-300 ${
+          isMobileMenuOpen ? 'opacity-50' : 'opacity-100'
+        }`}>
           <nav className="flex items-center justify-between relative z-10">
             {/* Logo Area */}
             <div className="nav-item-animate flex-shrink-0">
@@ -199,7 +201,7 @@ const Header = () => {
       </header>
 
       {/* Mobile Menu Overlay */}
-      <div className={`fixed inset-0 z-40 lg:hidden transition-all duration-300 ease-out ${
+      <div className={`fixed inset-0 z-50 lg:hidden transition-all duration-300 ease-out ${
         isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
       }`}>
         {/* Background Overlay */}
@@ -209,7 +211,7 @@ const Header = () => {
         />
         
         {/* Mobile Menu Content */}
-        <div className={`absolute top-0 right-0 h-full w-80 max-w-[85vw] bg-black/95 backdrop-blur-xl border-l border-white/10 transform transition-transform duration-300 ease-out ${
+        <div className={`absolute top-0 right-0 h-full w-80 max-w-[85vw] bg-black/95 backdrop-blur-xl border-l border-white/10 transform transition-transform duration-300 ease-out z-60 ${
           isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}>
           {/* Menu Header */}
