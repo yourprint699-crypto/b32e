@@ -117,7 +117,7 @@ const Header = () => {
                   <span className="font-[font2] text-black text-lg sm:text-xl lg:text-2xl">K</span>
                 </div>
                 <span className="font-[font2] text-lg sm:text-xl lg:text-2xl text-white uppercase tracking-wide">
-                  K72
+                  Amoura Works
                 </span>
               </Link>
             </div>
