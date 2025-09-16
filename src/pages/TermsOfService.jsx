@@ -22,7 +22,7 @@ const TermsOfService = () => {
                 Agreement to Terms
               </h2>
               <p className='font-[font1] text-responsive leading-relaxed text-layer-1'>
-                By engaging K72 Wedding Videography for your wedding or event, you agree to be bound by these Terms of Service. Please read these terms carefully before booking our services.
+                By engaging Amoura Works for editing services, you agree to be bound by these Terms of Service. Please review these terms carefully before using or booking our services.
               </p>
             </section>
 
