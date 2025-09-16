@@ -8,9 +8,9 @@ const Contact = () => {
 
 
   const socialLinks = [
-    { name: 'Instagram', url: 'https://instagram.com/k72wedding', icon: '📷' },
-    { name: 'Facebook', url: 'https://facebook.com/k72wedding', icon: '📘' },
-    { name: 'LinkedIn', url: 'https://linkedin.com/company/k72wedding', icon: '💼' }
+    { name: 'Instagram', url: 'https://instagram.com/Amouraworks', icon: '📷' },
+    { name: 'Facebook', url: 'https://facebook.com/Amouraworks', icon: '📘' },
+    { name: 'LinkedIn', url: 'https://linkedin.com/company/Amouraworks', icon: '💼' }
   ]
 
   return (
