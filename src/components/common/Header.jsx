@@ -112,9 +112,34 @@ const Header = () => {
                 to="/"
                 className="flex items-center space-x-3 group"
               >
-                {/* Placeholder logo area - easily replaceable */}
-                <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 bg-gradient-to-br from-[#D3FD50] to-[#b8e03e] rounded-full flex items-center justify-center glow-accent micro-bounce">
-                  <span className="font-[font2] text-black text-lg sm:text-xl lg:text-2xl">K</span>
+                {/* Logo container - replace logo.png in public folder to change logo */}
+                <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 flex items-center justify-center micro-bounce">
+                  <img 
+                    src="/logo.png" 
+                    alt="Amoura Works Logo" 
+                    className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-110"
+                    onError={(e) => {
+                      // Fallback if logo file is missing
+                      e.target.style.display = 'none';
+                      e.target.nextElementSibling.style.display = 'flex';
+                    }}
+                  />
+                  {/* Fallback placeholder (hidden by default) */}
+                  <div className="w-8 h-8 flex items-center justify-center">
+                    <img 
+                      src="/logo.png" 
+                      alt="Amoura Works Logo" 
+                      className="w-full h-full object-contain"
+                      onError={(e) => {
+                        // Mobile fallback
+                        e.target.style.display = 'none';
+                        e.target.nextElementSibling.style.display = 'flex';
+                      }}
+                    />
+                    <div className="w-full h-full bg-gradient-to-br from-[#D3FD50] to-[#b8e03e] rounded-full flex items-center justify-center glow-accent hidden">
+                      <span className="font-[font2] text-black text-sm">A</span>
+                    </div>
+                  </div>
                 </div>
                 <span className="font-[font2] text-lg sm:text-xl lg:text-2xl text-white uppercase tracking-wide">
                   Amoura Works
