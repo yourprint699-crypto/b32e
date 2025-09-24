@@ -16,24 +16,24 @@ import PageWrapper from '../components/common/PageWrapper'
  */
 const Projects = () => {
 
-  // Teasers section - 11 videos for quick previews
+  // Teasers section - replaced with provided video IDs
   const teasers = [
-    { videoId: 'dQw4w9WgXcQ' },
-    { videoId: 'jNQXAC9IVRw' },
-    { videoId: 'M7lc1UVf-VE' },
-    { videoId: 'ZZ5LpwO-An4' },
-    { videoId: 'kJQP7kiw5Fk' },
-    { videoId: 'tgbNymZ7vqY' },
-    { videoId: 'L_jWHffIx5E' },
-    { videoId: 'fJ9rUzIMcZQ' },
-    { videoId: 'QH2-TGUlwu4' },
-    { videoId: 'nfWlot6h_JM' },
-    { videoId: 'hFZFjoX2cGg' }
+    { videoId: 'QGsa5QB5gK4' },
+    { videoId: '5fR4MErzYeI' },
+    { videoId: '2qFnRXpSFn8' },
+    { videoId: '7bZ5MKY6pfU' },
+    { videoId: 'QstSPHan4oE' },
+    { videoId: 'HMJyD-kPWek' },
+    { videoId: 'zd5De3LAMQc' },
+    { videoId: 'HMJyD-kPWek' },
+    { videoId: 'YM1TZnbcbOs' },
+    { videoId: 'pRya97qUJMs' },
+    { videoId: 'AqqGxOrwv_g' }
   ]
 
-  // Highlights section - 20 videos for detailed showcases
+  // Highlights section - starts with last provided videoId, rest unchanged
   const highlights = [
-    { videoId: 'ScMzIvxBSi4' },
+    { videoId: '2qFnRXpSFn8' },
     { videoId: 'CevxZvSJLk8' },
     { videoId: 'kffacxfA7G4' },
     { videoId: 'qeMFqkcPYcg' },
@@ -58,7 +58,6 @@ const Projects = () => {
   gsap.registerPlugin(ScrollTrigger)
 
   useGSAP(function () {
-    // Smooth animation for video containers entering viewport - no reverse fade
     gsap.fromTo('.video-container', 
       {
         opacity: 0,
@@ -82,7 +81,6 @@ const Projects = () => {
       }
     )
 
-    // Smooth section title animations - no reverse fade
     gsap.fromTo('.section-title',
       {
         opacity: 0,
