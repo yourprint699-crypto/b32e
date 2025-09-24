@@ -3,6 +3,7 @@ import VideoGrid from '../components/projects/VideoGrid'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/all'
 import PageWrapper from '../components/common/PageWrapper'
+import { Link } from 'react-router-dom'
 
 /**
  * Projects component - Now displays YouTube videos in a responsive grid
@@ -107,9 +108,21 @@ const Projects = () => {
       <div className='container mx-auto section-padding mb-[30vh] sm:mb-[40vh] lg:mb-[50vh]'>
       {/* Page Header */}
       <div className='pt-[25vh] sm:pt-[30vh] lg:pt-[35vh] component-margin text-center'>
-        <h1 className='font-[font2] heading-responsive-xl uppercase text-white text-layer-3 text-glow'>
-          Projets
-        </h1>
+        <div className='floating-panel-dark space-y-8 sm:space-y-10 lg:space-y-12'>
+          <h1 className='font-[font2] heading-responsive-xl uppercase text-white text-layer-3 text-glow'>
+            The designs that turn vision into a bold reality
+          </h1>
+          <div className='text-center'>
+            <Link 
+              to='/contact'
+              className='btn-pill btn-primary h-12 sm:h-16 lg:h-20 px-8 sm:px-12 lg:px-16 inline-flex items-center justify-center group'
+            >
+              <span className='font-[font2] text-base sm:text-xl lg:text-2xl'>
+                Get In Touch Today
+              </span>
+            </Link>
+          </div>
+        </div>
       </div>
 
       <div className='projects-content space-y-16 sm:space-y-24 lg:space-y-32'>
