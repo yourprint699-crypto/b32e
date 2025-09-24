@@ -86,11 +86,11 @@ const Home = () => {
           <HomeHeroText />
         </div>
         
-        {/* Why Us Section */}
-        <WhyUsSection />
-        
         {/* Portfolio Section */}
         <PortfolioSection />
+        
+        {/* Why Us Section */}
+        <WhyUsSection />
         
         {/* Stats Section */}
         <StatsSection />
