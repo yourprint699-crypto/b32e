@@ -31,18 +31,15 @@ const highlights = [
   { videoId: 'C0DPdy98e4c' }
 ]
 
-// Video Card Component with hover effects and lazy loading
-const VideoCard = ({ video, index, isVisible }) => {
+// Minimal Video Card Component with cinematic styling
+const VideoCard = ({ video, index, isVisible, isMobile }) => {
   const [isHovered, setIsHovered] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
+  const [thumbnailLoaded, setThumbnailLoaded] = useState(false)
   const cardRef = useRef(null)
 
   // Generate thumbnail URL from YouTube video ID
   const thumbnailUrl = `https://img.youtube.com/vi/${video.videoId}/maxresdefault.jpg`
-  
-  // Randomize aspect ratios for masonry effect (but keep reasonable ratios)
-  const aspectRatios = ['aspect-video', 'aspect-[4/5]', 'aspect-[3/4]', 'aspect-square']
-  const aspectRatio = aspectRatios[index % aspectRatios.length]
 
   useGSAP(() => {
     if (isVisible) {
@@ -58,35 +55,57 @@ const VideoCard = ({ video, index, isVisible }) => {
           scale: 1,
           duration: 0.6,
           ease: "power2.out",
-          delay: index * 0.1
+          delay: index * 0.08
         }
       )
     }
   }, [isVisible, index])
 
+  const handleCardClick = () => {
+    if (isMobile) {
+      // On mobile, open YouTube video in new tab
+      window.open(`https://www.youtube.com/watch?v=${video.videoId}`, '_blank')
+    }
+  }
   return (
     <div 
       ref={cardRef}
-      className={`group relative ${aspectRatio} video-glass gpu-accelerated cursor-pointer overflow-hidden`}
+      className="group relative aspect-video video-glass gpu-accelerated cursor-pointer overflow-hidden"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onClick={handleCardClick}
     >
-      {/* Thumbnail Image (shown by default) */}
+      {/* Loading shimmer effect */}
+      {!thumbnailLoaded && (
+        <div className="absolute inset-0 loading-shimmer bg-gray-800/50" />
+      )}
+
+      {/* Thumbnail Image with blur-to-sharp transition */}
       <img
         src={thumbnailUrl}
         alt={`Portfolio video ${index + 1}`}
-        className={`absolute inset-0 w-full h-full object-cover transition-all duration-500 ${
-          isHovered && isLoaded ? 'opacity-0' : 'opacity-100'
-        }`}
+        className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ${
+          isHovered && isLoaded && !isMobile ? 'opacity-0 scale-105' : 'opacity-100 scale-100'
+        } ${!thumbnailLoaded ? 'blur-sm' : 'blur-0'}`}
         loading="lazy"
-        onLoad={() => setIsLoaded(true)}
+        onLoad={() => setThumbnailLoaded(true)}
       />
 
-      {/* YouTube Video (shown on hover) */}
-      {isVisible && (
+      {/* Low-res blurred fallback */}
+      <img
+        src={`https://img.youtube.com/vi/${video.videoId}/mqdefault.jpg`}
+        alt=""
+        className={`absolute inset-0 w-full h-full object-cover blur-md scale-110 transition-opacity duration-300 ${
+          thumbnailLoaded ? 'opacity-0' : 'opacity-100'
+        }`}
+        loading="lazy"
+      />
+
+      {/* YouTube Video (shown on hover for desktop only) */}
+      {isVisible && !isMobile && (
         <iframe
-          className={`absolute inset-0 w-full h-full transition-all duration-500 ${
-            isHovered && isLoaded ? 'opacity-100' : 'opacity-0'
+          className={`absolute inset-0 w-full h-full transition-all duration-700 ${
+            isHovered && thumbnailLoaded ? 'opacity-100 scale-105' : 'opacity-0 scale-100'
           }`}
           src={`https://www.youtube.com/embed/${video.videoId}?autoplay=${isHovered ? 1 : 0}&mute=1&loop=1&playlist=${video.videoId}&controls=1&modestbranding=1&rel=0&showinfo=0`}
           title={`Portfolio video ${index + 1}`}
@@ -94,47 +113,78 @@ const VideoCard = ({ video, index, isVisible }) => {
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
           loading="lazy"
+          onLoad={() => setIsLoaded(true)}
         />
       )}
 
-      {/* Hover Overlay */}
-      <div className={`absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent transition-all duration-500 ${
-        isHovered ? 'opacity-100' : 'opacity-0'
+      {/* Cinematic overlay gradients */}
+      <div className={`absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 transition-all duration-500 ${
+        isHovered && !isMobile ? 'opacity-60' : 'opacity-80'
       }`} />
 
-      {/* Play Icon Overlay */}
-      <div className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ${
-        isHovered ? 'opacity-0' : 'opacity-100'
+      {/* Custom Play Button */}
+      <div className={`absolute inset-0 flex items-center justify-center transition-all duration-500 ${
+        isHovered && !isMobile ? 'opacity-0 scale-90' : 'opacity-100 scale-100'
       }`}>
-        <div className="w-12 h-12 sm:w-16 sm:h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-          <div className="w-0 h-0 border-l-[8px] sm:border-l-[12px] border-l-white border-y-[6px] sm:border-y-[8px] border-y-transparent ml-1"></div>
+        <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 glass rounded-full flex items-center justify-center group-hover:scale-110 transition-all duration-300 glow-accent">
+          <div className="w-0 h-0 border-l-[12px] sm:border-l-[16px] lg:border-l-[20px] border-l-white border-y-[8px] sm:border-y-[12px] lg:border-y-[14px] border-y-transparent ml-1 sm:ml-2"></div>
         </div>
       </div>
 
-      {/* Hover Transform Effect */}
-      <div className="absolute inset-0 transition-transform duration-500 group-hover:scale-105" />
+      {/* Cinematic glow effect on hover */}
+      <div className={`absolute inset-0 rounded-lg sm:rounded-xl transition-all duration-500 ${
+        isHovered && !isMobile ? 'shadow-2xl shadow-[#D3FD50]/20 scale-105' : 'scale-100'
+      }`} />
     </div>
   )
 }
 
-// Masonry Grid Component
-const MasonryGrid = ({ videos, isVisible }) => {
+// 2-Row Grid Component
+const TwoRowGrid = ({ videos, isVisible, isMobile }) => {
+  // Calculate videos per row based on screen size
+  const getVideosPerRow = () => {
+    if (typeof window === 'undefined') return 3 // SSR fallback
+    if (window.innerWidth < 768) return 1 // Mobile: 1 per row
+    if (window.innerWidth < 1024) return 2 // Tablet: 2 per row  
+    return 3 // Desktop: 3 per row
+  }
+
+  const [videosPerRow, setVideosPerRow] = useState(getVideosPerRow)
+
+  useEffect(() => {
+    const handleResize = () => {
+      setVideosPerRow(getVideosPerRow())
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  // Get exactly 2 rows worth of videos
+  const totalVideos = videosPerRow * 2
+  const displayVideos = videos.slice(0, totalVideos)
+
   return (
-    <div className="masonry-container relative">
+    <div className="two-row-container relative">
       {/* Top Fade Gradient */}
-      <div className="absolute top-0 left-0 right-0 h-16 sm:h-20 lg:h-24 bg-gradient-to-b from-black/70 via-black/30 to-transparent pointer-events-none z-10" />
+      <div className="absolute -top-8 left-0 right-0 h-16 sm:h-20 lg:h-24 bg-gradient-to-b from-black/80 via-black/40 to-transparent pointer-events-none z-10" />
       
       {/* Bottom Fade Gradient */}
-      <div className="absolute bottom-0 left-0 right-0 h-16 sm:h-20 lg:h-24 bg-gradient-to-t from-black/70 via-black/30 to-transparent pointer-events-none z-10" />
+      <div className="absolute -bottom-8 left-0 right-0 h-16 sm:h-20 lg:h-24 bg-gradient-to-t from-black/80 via-black/40 to-transparent pointer-events-none z-10" />
 
-      {/* Masonry Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 auto-rows-max">
-        {videos.map((video, index) => (
+      {/* 2-Row Grid */}
+      <div className={`grid gap-4 sm:gap-6 lg:gap-8 ${
+        videosPerRow === 1 ? 'grid-cols-1' : 
+        videosPerRow === 2 ? 'grid-cols-2' : 
+        'grid-cols-3'
+      } grid-rows-2`}>
+        {displayVideos.map((video, index) => (
           <VideoCard 
             key={`${video.videoId}-${index}`}
             video={video}
             index={index}
             isVisible={isVisible}
+            isMobile={isMobile}
           />
         ))}
       </div>
@@ -145,9 +195,21 @@ const MasonryGrid = ({ videos, isVisible }) => {
 const PortfolioSection = () => {
   const sectionRef = useRef(null)
   const [isVisible, setIsVisible] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   
-  // Combine and limit videos for 2-row masonry (adjust count based on screen size)
-  const allVideos = [...teasers.slice(0, 6), ...highlights.slice(0, 8)] // 14 videos total
+  // Combine videos for 2-row display
+  const allVideos = [...teasers.slice(0, 5), ...highlights.slice(0, 7)] // 12 videos max (enough for 3x2 desktop grid)
+
+  // Detect mobile for interaction handling
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768 || 'ontouchstart' in window)
+    }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
   
   gsap.registerPlugin(ScrollTrigger)
 
@@ -200,9 +262,9 @@ const PortfolioSection = () => {
           </div>
         </div>
 
-        {/* Masonry Video Grid */}
-        <div className="portfolio-showcase component-margin max-width-wide">
-          <MasonryGrid videos={allVideos} isVisible={isVisible} />
+        {/* 2-Row Video Grid */}
+        <div className="portfolio-showcase component-margin max-width-content">
+          <TwoRowGrid videos={allVideos} isVisible={isVisible} isMobile={isMobile} />
         </div>
 
         {/* Portfolio Button */}
