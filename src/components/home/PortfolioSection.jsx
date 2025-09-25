@@ -257,7 +257,7 @@ const PortfolioSection = () => {
           </h2>
           <div className="floating-panel-dark max-width-content">
             <p className="font-[font1] text-responsive leading-relaxed text-layer-2">
-              Découvrez notre collection de films de mariage cinématographiques
+              gujar jati veeron ki
             </p>
           </div>
         </div>
