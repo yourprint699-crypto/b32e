@@ -21,32 +21,46 @@ const Home = () => {
 
   // iOS video autoplay optimization
   useEffect(() => {
+    // Enhanced user interaction handling for video autoplay
     const handleUserInteraction = () => {
-      // Find all videos and attempt to play them after user interaction
+      // Find all videos and attempt to play them with enhanced error handling
       const videos = document.querySelectorAll('video');
       videos.forEach(video => {
-        if (video.paused) {
+        if (video.paused && video.readyState >= 2) {
+          // Ensure video is muted before playing (iOS requirement)
+          video.muted = true;
+          video.volume = 0;
           const playPromise = video.play();
           if (playPromise !== undefined) {
             playPromise.catch(error => {
-              console.warn('Video play failed after user interaction:', error);
+              console.warn('Video play failed after user interaction:', error.name, error.message);
+              // Additional fallback for iOS power saving mode
+              setTimeout(() => {
+                if (video.paused) {
+                  video.load(); // Reload video element
+                  video.play().catch(e => console.warn('Reload play failed:', e));
+                }
+              }, 100);
             });
           }
         }
       });
       
-      // Remove event listeners after first interaction
+      // Remove event listeners after successful interaction
       document.removeEventListener('touchstart', handleUserInteraction);
       document.removeEventListener('click', handleUserInteraction);
+      document.removeEventListener('scroll', handleUserInteraction);
     };
 
-    // Add event listeners for user interaction on iOS
+    // Add multiple event listeners for comprehensive iOS support
     document.addEventListener('touchstart', handleUserInteraction, { passive: true });
     document.addEventListener('click', handleUserInteraction, { passive: true });
+    document.addEventListener('scroll', handleUserInteraction, { passive: true, once: true });
 
     return () => {
       document.removeEventListener('touchstart', handleUserInteraction);
       document.removeEventListener('click', handleUserInteraction);
+      document.removeEventListener('scroll', handleUserInteraction);
     };
   }, []);
 

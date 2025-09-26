@@ -11,24 +11,52 @@ const HomeHeroText = () => {
           <span>we</span>
           <div className="h-[8vw] w-[20vw] sm:h-[7vw] sm:w-[16vw] rounded-full overflow-hidden mx-2 sm:mx-2 glass glow-accent flex-shrink-0 my-1 sm:my-0">
             <video
-              className="h-full w-full object-cover hero-inline-video ios-video-fix"
+              className="h-full w-full object-cover hero-inline-video"
+              style={{
+                objectFit: 'cover',
+                objectPosition: 'center center',
+                // iOS Safari specific optimizations
+                WebkitTransform: 'translateZ(0)',
+                transform: 'translateZ(0)',
+                WebkitBackfaceVisibility: 'hidden',
+                backfaceVisibility: 'hidden'
+              }}
+              // CRITICAL: iOS Safari attributes in correct order
+              muted
+              defaultMuted
               autoPlay
               playsInline
               loop
-              muted
               preload="auto"
-              webkit-playsinline="true"
+              webkit-playsinline
+              x-webkit-airplay="allow"
               onLoadedData={(e) => {
-                // Force play on iOS after video loads
+                // Enhanced iOS video handling
                 const video = e.target;
+                // Ensure muted state for autoplay compliance
+                video.muted = true;
+                video.volume = 0;
+                video.playsInline = true;
+                
                 const playPromise = video.play();
                 if (playPromise !== undefined) {
                   playPromise.catch(error => {
-                    console.warn('Inline video autoplay failed:', error);
+                    console.warn('Inline video autoplay failed:', error.name);
+                    // Fallback: reload video element
+                    setTimeout(() => {
+                      video.load();
+                      video.play().catch(e => console.warn('Inline video reload failed:', e));
+                    }, 50);
                   });
                 }
               }}
+              onError={(e) => {
+                console.warn('Inline video error:', e.target.error);
+              }}
             >
+              {/* Multiple sources for cross-browser compatibility */}
+              <source src="/video-720.mp4" type="video/mp4" media="(max-width: 767px)" />
+              <source src="/video.webm" type="video/webm" />
               <source src="/video.mp4" type="video/mp4" />
             </video>
           </div>
