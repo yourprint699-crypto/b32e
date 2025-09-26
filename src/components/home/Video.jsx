@@ -162,10 +162,14 @@ const Video = () => {
       {/* Fallback image - loads immediately to prevent layout shift */}
       <img
         className="hero-fallback-image absolute inset-0 w-full h-full object-cover z-0"
-        src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop"
-        alt="Creative workspace background"
+        src="/video-fallback.jpg"
+        alt="Wedding videography background"
         loading="eager"
         style={{
+          objectFit: 'cover',
+          objectPosition: 'center center',
+          width: '100%',
+          height: '100%',
           opacity: isLoaded && !hasError ? 0 : 1,
           transition: 'opacity 0.5s ease-in-out'
         }}
