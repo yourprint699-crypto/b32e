@@ -198,11 +198,12 @@ const Video = () => {
         }}
       >
         {/* WebM for modern browsers - best compression */}
-        <source
-          src="/video.webm"
-          type="video/webm"
-          media={isMobile ? "none" : "all"}
-        />
+        {!isMobile && (
+          <source
+            src="/video.webm"
+            type="video/webm"
+          />
+        )}
         
         {/* Mobile-optimized MP4 for devices < 768px */}
         <source
