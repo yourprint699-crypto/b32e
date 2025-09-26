@@ -165,12 +165,12 @@ const TwoRowGrid = ({ videos, isVisible, isMobile }) => {
   const displayVideos = videos.slice(0, totalVideos)
 
   return (
-    <div className="two-row-container relative">
+    <div className="two-row-container relative mb-0">
       {/* Top Fade Gradient */}
-      <div className="absolute -top-8 left-0 right-0 h-16 sm:h-20 lg:h-24 bg-gradient-to-b from-black/80 via-black/40 to-transparent pointer-events-none z-10" />
+      <div className="absolute -top-4 left-0 right-0 h-8 sm:h-12 lg:h-16 bg-gradient-to-b from-black/60 via-black/30 to-transparent pointer-events-none z-10" />
       
       {/* Bottom Fade Gradient */}
-      <div className="absolute -bottom-8 left-0 right-0 h-16 sm:h-20 lg:h-24 bg-gradient-to-t from-black/80 via-black/40 to-transparent pointer-events-none z-10" />
+      <div className="absolute -bottom-4 left-0 right-0 h-8 sm:h-12 lg:h-16 bg-gradient-to-t from-black/60 via-black/30 to-transparent pointer-events-none z-10" />
 
       {/* 2-Row Grid */}
       <div className={`grid gap-4 sm:gap-6 lg:gap-8 ${
