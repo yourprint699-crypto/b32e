@@ -82,7 +82,7 @@ const ProcessSection = () => {
     {
       step: '06',
       title: 'Final Delivery',
-      description: 'Receive your complete wedding film package with highlights reel and full ceremony footage.',
+      description: 'When everything feels just right, we send over your films in high quality (upto 4k). They’re yours to keep, share, and come back to whenever you want a piece of your story you’ll always have with you.',
       duration: 'Digital delivery'
     }
   ]
