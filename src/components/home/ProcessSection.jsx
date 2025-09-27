@@ -52,7 +52,7 @@ const ProcessSection = () => {
   const processSteps = [
     {
       step: '01',
-      title: 'Initial Consultation',
+      title: 'Let’s Talk',
       description: 'We start with a quick chat to understand your story and the style of film you want.',
       duration: '1-2 hours'
     },
