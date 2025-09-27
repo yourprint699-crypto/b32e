@@ -64,9 +64,8 @@ const ProcessSection = () => {
     },
     {
       step: '03',
-      title: 'Wedding Day Coverage',
-      description: 'Our team captures every moment with professional equipment and artistic expertise.',
-      duration: '8-12 hours'
+      title: 'Plan the Edit',
+      description: 'We work with you to choose the right format: teaser, highlight, feature, or full film so we can meet your expectations and deliver exactly what you’ve imagined.'
     },
     {
       step: '04',
