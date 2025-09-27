@@ -75,8 +75,8 @@ const ProcessSection = () => {
     },
     {
       step: '05',
-      title: 'Review & Approval',
-      description: 'We present your completed film for review. This is your moment to request any final adjustments to ensure the film perfectly captures your vision before final delivery.',
+      title: 'First Draft & Revisions',
+      description: 'You’ll receive the first cut online. Two rounds of revisions are included, and we listen closely, understand what feels off, and refine until the next version lands exactly where it should.',
       duration: '1-2 weeks'
     },
     {
