@@ -69,7 +69,7 @@ const ProcessSection = () => {
     },
     {
       step: '04',
-      title: 'Post-Production Magic',
+      title: 'Crafting the Masterpiece',
       description: 'Expert editing, color grading, and audio enhancement to create your cinematic masterpiece.',
       duration: '4-6 weeks'
     },
