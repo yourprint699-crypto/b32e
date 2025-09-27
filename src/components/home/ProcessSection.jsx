@@ -70,7 +70,7 @@ const ProcessSection = () => {
     {
       step: '04',
       title: 'Crafting the Masterpiece',
-      description: 'Expert editing, color grading, and audio enhancement to create your cinematic masterpiece.',
+      description: 'This is where our team pours in the hours. We cut with rhythm, grade every frame for tone and color, mix the audio for depth, and weave the footage into a film that feels alive. Every detail is shaped with care until it becomes something unforgettable.',
       duration: '4-6 weeks'
     },
     {
