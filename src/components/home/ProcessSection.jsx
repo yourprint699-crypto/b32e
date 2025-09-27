@@ -58,8 +58,8 @@ const ProcessSection = () => {
     },
     {
       step: '02',
-      title: 'Planning & Preparation',
-      description: 'We create a detailed shooting plan, scout locations, and coordinate with your wedding planner.',
+      title: 'Share Your Footage',
+      description: 'Send us a short 2–3 minute sample of your raw footage. This helps us gauge the quality and flow so we can give you the fairest quote and a plan that fits.',
       duration: '2-3 weeks'
     },
     {
