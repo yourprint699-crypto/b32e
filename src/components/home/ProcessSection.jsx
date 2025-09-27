@@ -53,7 +53,7 @@ const ProcessSection = () => {
     {
       step: '01',
       title: 'Initial Consultation',
-      description: 'We discuss your vision, preferences, and wedding details to understand your unique story.',
+      description: 'We start with a quick chat to understand your story and the style of film you want.',
       duration: '1-2 hours'
     },
     {
