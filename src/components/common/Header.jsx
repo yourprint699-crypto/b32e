@@ -324,13 +324,10 @@ const Header = () => {
               <span className="text-2xl">×</span>
             </button>
             
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-gradient-to-br from-[#D3FD50] to-[#b8e03e] rounded-full flex items-center justify-center glow-accent">
-                <span className="font-[font2] text-black text-sm">A</span>
-              </div>
+            <div className="flex items-center justify-center">
               <span 
                 id="mobile-menu-title"
-                className="font-[font2] text-lg text-white uppercase tracking-wide"
+                className="font-[font2] text-xl text-white uppercase tracking-wide text-center"
               >
                 Amoura Works
               </span>
