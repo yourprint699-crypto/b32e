@@ -5,6 +5,10 @@ import gsap from 'gsap'
 
 const Header = () => {
   const headerRef = useRef(null)
+  const mobileMenuRef = useRef(null)
+  const hamburgerButtonRef = useRef(null)
+  const firstMenuItemRef = useRef(null)
+  const lastMenuItemRef = useRef(null)
   const location = useLocation()
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -25,22 +29,105 @@ const Header = () => {
     setIsMobileMenuOpen(false)
   }, [location.pathname])
 
+  // Lock/unlock body scroll when menu opens/closes
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      // Lock body scroll
+      document.body.style.overflow = 'hidden'
+      document.body.style.position = 'fixed'
+      document.body.style.top = `-${window.scrollY}px`
+      document.body.style.width = '100%'
+    } else {
+      // Unlock body scroll and restore position
+      const scrollY = document.body.style.top
+      document.body.style.overflow = ''
+      document.body.style.position = ''
+      document.body.style.top = ''
+      document.body.style.width = ''
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || '0') * -1)
+      }
+    }
+
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = ''
+      document.body.style.position = ''
+      document.body.style.top = ''
+      document.body.style.width = ''
+    }
+  }, [isMobileMenuOpen])
+
+  // Focus management and keyboard navigation
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      // Focus first menu item when menu opens
+      setTimeout(() => {
+        firstMenuItemRef.current?.focus()
+      }, 100)
+    }
+  }, [isMobileMenuOpen])
+
+  // Handle keyboard navigation within menu
+  const handleMenuKeyDown = (e) => {
+    if (!isMobileMenuOpen) return
+
+    if (e.key === 'Escape') {
+      closeMobileMenu()
+      return
+    }
+
+    if (e.key === 'Tab') {
+      const focusableElements = mobileMenuRef.current?.querySelectorAll(
+        'button, a, [tabindex]:not([tabindex="-1"])'
+      )
+      
+      if (!focusableElements || focusableElements.length === 0) return
+
+      const firstElement = focusableElements[0]
+      const lastElement = focusableElements[focusableElements.length - 1]
+
+      if (e.shiftKey) {
+        // Shift + Tab (backward)
+        if (document.activeElement === firstElement) {
+          e.preventDefault()
+          lastElement.focus()
+        }
+      } else {
+        // Tab (forward)
+        if (document.activeElement === lastElement) {
+          e.preventDefault()
+          firstElement.focus()
+        }
+      }
+    }
+  }
+
+  // Add keyboard event listener
+  useEffect(() => {
+    document.addEventListener('keydown', handleMenuKeyDown)
+    return () => document.removeEventListener('keydown', handleMenuKeyDown)
+  }, [isMobileMenuOpen])
   // Handle mobile menu toggle
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen)
   }
 
-  // Close mobile menu when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (isMobileMenuOpen && !event.target.closest('.mobile-menu-container')) {
-        setIsMobileMenuOpen(false)
-      }
-    }
+  // Close mobile menu and restore focus
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false)
+    // Restore focus to hamburger button
+    setTimeout(() => {
+      hamburgerButtonRef.current?.focus()
+    }, 100)
+  }
 
-    document.addEventListener('click', handleClickOutside)
-    return () => document.removeEventListener('click', handleClickOutside)
-  }, [isMobileMenuOpen])
+  // Handle overlay click to close menu
+  const handleOverlayClick = (e) => {
+    if (e.target === e.currentTarget) {
+      closeMobileMenu()
+    }
+  }
   useGSAP(() => {
     // Smooth header entrance animation
     gsap.fromTo(headerRef.current,
@@ -89,7 +176,7 @@ const Header = () => {
       }
     }
     // Close mobile menu after navigation
-    setIsMobileMenuOpen(false)
+    closeMobileMenu()
   }
 
   return (
@@ -185,11 +272,14 @@ const Header = () => {
             </div>
 
             {/* Mobile Menu Toggle */}
-            <div className="lg:hidden nav-item-animate mobile-menu-container">
+            <div className="lg:hidden nav-item-animate">
               <button 
+                ref={hamburgerButtonRef}
                 onClick={toggleMobileMenu}
-                className="w-12 h-12 flex flex-col items-center justify-center space-y-1.5 group p-2 relative z-50"
+                className="w-12 h-12 flex flex-col items-center justify-center space-y-1.5 group p-2 relative z-50 focus:outline-none focus:ring-2 focus:ring-[#D3FD50] focus:ring-opacity-50 rounded-lg"
                 aria-label="Toggle mobile menu"
+                aria-expanded={isMobileMenuOpen}
+                aria-controls="mobile-menu"
               >
                 <span className={`w-5 h-0.5 bg-white transition-all duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-2' : 'group-hover:w-6'}`} />
                 <span className={`w-5 h-0.5 bg-white transition-all duration-300 ${isMobileMenuOpen ? 'opacity-0' : 'group-hover:w-6'}`} />
@@ -201,26 +291,47 @@ const Header = () => {
       </header>
 
       {/* Mobile Menu Overlay */}
-      <div className={`fixed inset-0 z-50 lg:hidden transition-all duration-300 ease-out ${
+      <div 
+        className={`fixed inset-0 z-50 lg:hidden transition-all duration-300 ease-out ${
         isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
-      }`}>
+        }`}
+        onClick={handleOverlayClick}
+        aria-hidden={!isMobileMenuOpen}
+      >
         {/* Background Overlay */}
-        <div 
-          className="absolute inset-0 bg-black/80 backdrop-blur-md"
-          onClick={() => setIsMobileMenuOpen(false)}
-        />
+        <div className="absolute inset-0 bg-black/80 backdrop-blur-md" />
         
         {/* Mobile Menu Content */}
-        <div className={`absolute top-0 right-0 h-full w-80 max-w-[85vw] bg-black/95 backdrop-blur-xl border-l border-white/10 transform transition-transform duration-300 ease-out z-60 ${
+        <div 
+          ref={mobileMenuRef}
+          id="mobile-menu"
+          className={`absolute top-0 right-0 h-full w-80 max-w-[85vw] bg-black/95 backdrop-blur-xl border-l border-white/10 transform transition-transform duration-300 ease-out z-60 ${
           isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}>
+          }`}
+          onClick={(e) => e.stopPropagation()}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="mobile-menu-title"
+        >
           {/* Menu Header */}
           <div className="pt-20 pb-8 px-6 border-b border-white/10">
+            {/* Close Button */}
+            <button
+              onClick={closeMobileMenu}
+              className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center text-white hover:text-[#D3FD50] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#D3FD50] focus:ring-opacity-50 rounded-lg"
+              aria-label="Close menu"
+            >
+              <span className="text-2xl">×</span>
+            </button>
+            
             <div className="flex items-center space-x-3">
               <div className="w-8 h-8 bg-gradient-to-br from-[#D3FD50] to-[#b8e03e] rounded-full flex items-center justify-center glow-accent">
-                <span className="font-[font2] text-black text-sm">K</span>
+                <span className="font-[font2] text-black text-sm">A</span>
               </div>
-              <span className="font-[font2] text-lg text-white uppercase tracking-wide">
+              <span 
+                id="mobile-menu-title"
+                className="font-[font2] text-lg text-white uppercase tracking-wide"
+              >
                 Amoura Works
               </span>
             </div>
@@ -232,16 +343,19 @@ const Header = () => {
               <div key={index} className="mobile-nav-item">
                 {item.href.startsWith('#') ? (
                   <button
+                    ref={index === 0 ? firstMenuItemRef : null}
                     onClick={(e) => handleSmoothScroll(e, item.href)}
-                    className="w-full text-left font-[font2] text-lg text-white uppercase tracking-wide py-3 px-4 rounded-lg transition-all duration-300 hover:bg-white/5 hover:text-[#D3FD50] relative group"
+                    className="w-full text-left font-[font2] text-lg text-white uppercase tracking-wide py-3 px-4 rounded-lg transition-all duration-300 hover:bg-white/5 hover:text-[#D3FD50] focus:bg-white/5 focus:text-[#D3FD50] focus:outline-none relative group"
                   >
                     {item.name}
                     <span className="absolute bottom-0 left-4 w-0 h-0.5 bg-[#D3FD50] transition-all duration-300 group-hover:w-8" />
                   </button>
                 ) : (
                   <Link
+                    ref={index === 0 ? firstMenuItemRef : null}
                     to={item.href}
-                    className="block font-[font2] text-lg text-white uppercase tracking-wide py-3 px-4 rounded-lg transition-all duration-300 hover:bg-white/5 hover:text-[#D3FD50] relative group"
+                    onClick={closeMobileMenu}
+                    className="block font-[font2] text-lg text-white uppercase tracking-wide py-3 px-4 rounded-lg transition-all duration-300 hover:bg-white/5 hover:text-[#D3FD50] focus:bg-white/5 focus:text-[#D3FD50] focus:outline-none relative group"
                   >
                     {item.name}
                     <span className="absolute bottom-0 left-4 w-0 h-0.5 bg-[#D3FD50] transition-all duration-300 group-hover:w-8" />
@@ -254,8 +368,9 @@ const Header = () => {
             <div className="pt-4 border-t border-white/10">
               <Link
                 to="/affiliate-program"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="block w-full text-center font-[font2] text-sm text-white uppercase tracking-wide px-6 py-3 border border-gray-400 rounded-full transition-all duration-300 hover:bg-[#D3FD50] hover:text-black hover:border-[#D3FD50]"
+                ref={lastMenuItemRef}
+                onClick={closeMobileMenu}
+                className="block w-full text-center font-[font2] text-sm text-white uppercase tracking-wide px-6 py-3 border border-gray-400 rounded-full transition-all duration-300 hover:bg-[#D3FD50] hover:text-black hover:border-[#D3FD50] focus:bg-[#D3FD50] focus:text-black focus:border-[#D3FD50] focus:outline-none"
               >
                 Become an Affiliate
               </Link>
