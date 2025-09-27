@@ -15,43 +15,75 @@ const HomeHeroText = () => {
               style={{
                 objectFit: 'cover',
                 objectPosition: 'center center',
-                // iOS Safari specific optimizations
-                WebkitTransform: 'translateZ(0)',
-                transform: 'translateZ(0)',
+                // Enhanced iOS Safari optimizations to prevent flickering
+                WebkitTransform: 'translate3d(0,0,0)',
+                transform: 'translate3d(0,0,0)',
                 WebkitBackfaceVisibility: 'hidden',
-                backfaceVisibility: 'hidden'
+                backfaceVisibility: 'hidden',
+                // Critical: Prevent iOS Safari video flashing
+                opacity: 1,
+                visibility: 'visible',
+                WebkitAppearance: 'none',
+                // Force hardware acceleration consistently
+                willChange: 'transform'
               }}
-              // CRITICAL: iOS Safari attributes in correct order
+              // CRITICAL: iOS Safari attributes in optimal order for stability
               muted
               defaultMuted
               autoPlay
               playsInline
               loop
-              preload="auto"
+              preload="metadata"
               webkit-playsinline
               x-webkit-airplay="allow"
+              // Enhanced iOS Safari stability attributes
+              disablePictureInPicture
+              controlsList="nodownload nofullscreen noremoteplayback"
               onLoadedData={(e) => {
-                // Enhanced iOS video handling
+                // Enhanced iOS video handling with flicker prevention
                 const video = e.target;
+                
+                // Immediate stability setup to prevent flashing
+                video.style.opacity = '1';
+                video.style.visibility = 'visible';
+                
                 // Ensure muted state for autoplay compliance
                 video.muted = true;
                 video.volume = 0;
                 video.playsInline = true;
                 
+                // Force immediate render to prevent flash
+                video.style.transform = 'translate3d(0,0,0)';
+                
                 const playPromise = video.play();
                 if (playPromise !== undefined) {
                   playPromise.catch(error => {
                     console.warn('Inline video autoplay failed:', error.name);
-                    // Fallback: reload video element
+                    // Enhanced fallback with stability preservation
                     setTimeout(() => {
+                      video.style.opacity = '1';
                       video.load();
                       video.play().catch(e => console.warn('Inline video reload failed:', e));
                     }, 50);
                   });
                 }
               }}
+              onLoadedMetadata={(e) => {
+                // Ensure video is immediately visible when metadata loads
+                const video = e.target;
+                video.style.opacity = '1';
+                video.style.visibility = 'visible';
+              }}
+              onCanPlay={(e) => {
+                // Final stability check when video can play
+                const video = e.target;
+                video.style.opacity = '1';
+                video.style.visibility = 'visible';
+              }}
               onError={(e) => {
                 console.warn('Inline video error:', e.target.error);
+                // Maintain visibility even on error to prevent flash
+                e.target.style.opacity = '1';
               }}
             >
               {/* Multiple sources for cross-browser compatibility */}
