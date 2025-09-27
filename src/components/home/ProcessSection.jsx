@@ -92,7 +92,7 @@ const ProcessSection = () => {
           </h2>
           <div className='floating-panel-dark max-width-content'>
             <p className='font-[font1] text-responsive leading-relaxed text-layer-2'>
-            Un processus éprouvé qui garantit des résultats exceptionnels à chaque étape de votre projet.
+            A clear, simple journey that makes sure your memories are turned into films worth keeping for a lifetime.
             </p>
           </div>
         </div>
