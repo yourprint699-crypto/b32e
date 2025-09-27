@@ -75,6 +75,12 @@ const ProcessSection = () => {
     },
     {
       step: '05',
+      title: 'Review & Approval',
+      description: 'We present your completed film for review. This is your moment to request any final adjustments to ensure the film perfectly captures your vision before final delivery.',
+      duration: '1-2 weeks'
+    },
+    {
+      step: '06',
       title: 'Final Delivery',
       description: 'Receive your complete wedding film package with highlights reel and full ceremony footage.',
       duration: 'Digital delivery'
