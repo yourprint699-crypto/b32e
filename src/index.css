@@ -1978,6 +1978,224 @@ iframe {
     gap: 2rem;
   }
 }
+
+/* Enhanced GPU acceleration and performance optimizations */
+.gpu-accelerated {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  will-change: auto; /* Default to auto, set to transform/opacity only during animations */
+}
+
+/* Smooth transitions with consistent easing */
+.glass-hover {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-hover:hover {
+  transform: translateY(-1px) scale(1.01);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.glass-click:active {
+  transform: translateY(0) scale(0.99);
+  transition: all 0.08s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Optimized micro-bounce animation */
+.micro-bounce {
+  animation: micro-bounce 2.5s ease-in-out infinite;
+}
+
+@keyframes micro-bounce {
+  0%, 100% { 
+    transform: translateY(0); 
+  }
+  50% { 
+    transform: translateY(-2px); 
+  }
+}
+
+/* Smooth interactive hover effects */
+.interactive-hover {
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.interactive-hover:hover {
+  color: #D3FD50;
+  transform: translateX(3px);
+}
+
+/* Optimized button transitions */
+.btn-pill {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateZ(0); /* Force GPU acceleration */
+}
+
+.btn-pill:hover {
+  transform: translateY(-1px) scale(1.01);
+  box-shadow: 0 10px 30px rgba(211, 253, 80, 0.3);
+}
+
+.btn-pill:active {
+  transform: translateY(0) scale(0.99);
+  transition: all 0.08s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Smooth glow effects */
+.glow-accent {
+  filter: drop-shadow(0 0 6px rgba(211, 253, 80, 0.25));
+  transition: filter 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glow-accent:hover {
+  filter: drop-shadow(0 0 10px rgba(211, 253, 80, 0.4));
+}
+
+/* Optimized loading animations */
+.loading-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 1.8s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Smooth accent line animations */
+.accent-line {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #D3FD50, transparent);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.accent-line-vertical {
+  width: 2px;
+  background: linear-gradient(180deg, #D3FD50, transparent);
+}
+
+/* Enhanced video glass effect */
+.video-glass {
+  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+.video-glass:hover {
+  backdrop-filter: blur(15px);
+  background: rgba(0, 0, 0, 0.15);
+  border-color: rgba(211, 253, 80, 0.2);
+}
+
+/* Optimized text glow effects */
+.text-glow {
+  text-shadow: 0 0 8px rgba(211, 253, 80, 0.25);
+}
+
+.text-glow-strong {
+  text-shadow: 0 0 12px rgba(211, 253, 80, 0.4);
+}
+
+/* Smooth section transitions */
+.section-transition {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Enhanced form input transitions */
+.input-inset {
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateZ(0);
+}
+
+.input-inset:focus {
+  box-shadow: 0 0 0 2px rgba(211, 253, 80, 0.3);
+  transform: translateY(-0.5px);
+}
+
+/* Optimized floating panel effects */
+.floating-panel-dark {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateZ(0);
+}
+
+/* Smooth glass effects */
+.glass {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass:hover {
+  backdrop-filter: blur(15px);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(211, 253, 80, 0.2);
+}
+
+/* Optimized glow pulse animation */
+.animate-glow-pulse {
+  animation: glow-pulse 3.5s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+  0%, 100% { 
+    filter: drop-shadow(0 0 8px rgba(211, 253, 80, 0.3)); 
+  }
+  50% { 
+    filter: drop-shadow(0 0 14px rgba(211, 253, 80, 0.5)); 
+  }
+}
+
+/* Performance optimizations for mobile */
+@media (max-width: 768px) {
+  .gpu-accelerated {
+    transform: translate3d(0, 0, 0);
+  }
+  
+  .glass-hover:hover {
+    transform: translateY(-0.5px) scale(1.005);
+  }
+  
+  .btn-pill:hover {
+    transform: translateY(-0.5px) scale(1.005);
+  }
+  
+  .micro-bounce {
+    animation-duration: 3s;
+  }
+  
+  @keyframes micro-bounce {
+    0%, 100% { 
+      transform: translateY(0); 
+    }
+    50% { 
+      transform: translateY(-1px); 
+    }
+  }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .micro-bounce,
+  .animate-glow-pulse {
+    animation: none;
+  }
+  
+  .glass-hover,
+  .btn-pill,
+  .interactive-hover,
+  .input-inset,
+  .floating-panel-dark,
+  .glass,
+  .section-transition {
+    transition: opacity 0.2s ease;
+  }
+}
+
 /* Responsive performance optimizations */
 @media (max-width: 767px) {
     /* Reduce expensive effects on mobile */
