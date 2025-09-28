@@ -19,55 +19,57 @@ const ContactSection = () => {
 
   useGSAP(() => {
     const ctx = gsap.context(() => {
+      // Set initial states
+      gsap.set('.contact-title', { opacity: 0, y: 30, willChange: 'transform, opacity' })
+      gsap.set('.contact-info', { opacity: 0, y: 20, willChange: 'transform, opacity' })
+
       // Title animation
       gsap.fromTo(
         '.contact-title',
-        { opacity: 0, y: 50 },
+        { opacity: 0, y: 30 },
         {
           opacity: 1,
           y: 0,
-          duration: 1,
-          ease: 'power2.out',
+          duration: 0.8,
+          ease: 'cubic-bezier(0.16, 1, 0.3, 1)',
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: 'top 95%',
+            start: 'top 85%',
             toggleActions: 'play none none none',
+            once: true
           },
+          onComplete: () => {
+            gsap.set('.contact-title', { willChange: 'auto' })
+          }
         }
       );
 
       // Info blocks animation
       gsap.fromTo(
         '.contact-info',
-        { opacity: 0, y: 30 },
+        { opacity: 0, y: 20 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.8,
-          ease: 'power2.out',
-          stagger: 0.2,
+          duration: 0.6,
+          ease: 'cubic-bezier(0.16, 1, 0.3, 1)',
+          stagger: 0.15,
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: 'top 90%',
+            start: 'top 80%',
             toggleActions: 'play none none none',
+            once: true
           },
+          onComplete: () => {
+            gsap.set('.contact-info', { willChange: 'auto' })
+          }
         }
       );
 
-      // ✅ fallback if already visible (desktop on load)
-      if (sectionRef.current.getBoundingClientRect().top < window.innerHeight) {
-        gsap.to('.contact-title, .contact-info', {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          stagger: 0.2,
-          overwrite: true,
-        });
-      }
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [])
 
   const socialLinks = [
     { name: 'Instagram', url: 'https://instagram.com/s111khar', icon: '📷' },
@@ -138,7 +140,7 @@ const ContactSection = () => {
         <div className="contact-grid responsive-grid-2 max-width-wide">
           {/* Contact Information */}
           <div className="space-y-6 sm:space-y-8 lg:space-y-10">
-            <div className="contact-info floating-panel-dark space-y-4 sm:space-y-6">
+            <div className="contact-info floating-panel-dark space-y-4 sm:space-y-6 gpu-accelerated">
               <h3 className="font-[font2] heading-responsive-md uppercase text-[#D3FD50] text-layer-2 text-glow">
                 Contact Details
               </h3>
@@ -158,7 +160,7 @@ const ContactSection = () => {
               </div>
             </div>
 
-            <div className="contact-info floating-panel-dark space-y-4 sm:space-y-6">
+            <div className="contact-info floating-panel-dark space-y-4 sm:space-y-6 gpu-accelerated">
               <h3 className="font-[font2] heading-responsive-md uppercase text-[#D3FD50] text-layer-2 text-glow">
                 Follow Us
               </h3>
@@ -169,7 +171,7 @@ const ContactSection = () => {
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 glass glass-hover glass-click rounded-full flex items-center justify-center group glow-accent"
+                    className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 glass glass-hover glass-click rounded-full flex items-center justify-center group glow-accent gpu-accelerated"
                   >
                     <span className="text-lg sm:text-xl lg:text-2xl micro-bounce glow-accent">
                       {social.icon}
@@ -179,7 +181,7 @@ const ContactSection = () => {
               </div>
             </div>
 
-            <div className="contact-info floating-panel-dark">
+            <div className="contact-info floating-panel-dark gpu-accelerated">
               <h4 className="font-[font2] text-lg sm:text-xl lg:text-2xl uppercase text-[#D3FD50] mb-4 sm:mb-6 text-layer-2 text-glow">
                   Quick Response Guarantee
               </h4>
@@ -190,7 +192,7 @@ const ContactSection = () => {
           </div>
 
           {/* Quick Contact Form */}
-          <div className="contact-info floating-panel-dark">
+          <div className="contact-info floating-panel-dark gpu-accelerated">
             <h3 className="font-[font2] heading-responsive-md uppercase text-[#D3FD50] mb-6 sm:mb-8 lg:mb-10 text-layer-2 text-glow">
                 Quick Inquiry
             </h3>

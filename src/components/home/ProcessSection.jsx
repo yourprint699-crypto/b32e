@@ -9,20 +9,28 @@ const ProcessSection = () => {
   gsap.registerPlugin(ScrollTrigger)
 
   useGSAP(() => {
+    // Set initial states
+    gsap.set('.process-title', { opacity: 0, y: 30, willChange: 'transform, opacity' })
+    gsap.set('.process-step', { opacity: 0, x: -30, willChange: 'transform, opacity' })
+
     gsap.fromTo('.process-title',
       {
         opacity: 0,
-        y: 50
+        y: 30
       },
       {
         opacity: 1,
         y: 0,
-        duration: 1,
-        ease: "power2.out",
+        duration: 0.8,
+        ease: "cubic-bezier(0.16, 1, 0.3, 1)",
         scrollTrigger: {
           trigger: '.process-title',
-          start: 'top 80%',
-          toggleActions: 'play none none none'
+          start: 'top 85%',
+          toggleActions: 'play none none none',
+          once: true
+        },
+        onComplete: () => {
+          gsap.set('.process-title', { willChange: 'auto' })
         }
       }
     )
@@ -30,24 +38,28 @@ const ProcessSection = () => {
     gsap.fromTo('.process-step',
       {
         opacity: 0,
-        x: -50
+        x: -30
       },
       {
         opacity: 1,
         x: 0,
-        duration: 0.8,
-        ease: "power2.out",
+        duration: 0.6,
+        ease: "cubic-bezier(0.16, 1, 0.3, 1)",
         stagger: {
-          amount: 0.6
+          amount: 0.4
         },
         scrollTrigger: {
           trigger: '.process-timeline',
-          start: 'top 75%',
-          toggleActions: 'play none none none'
+          start: 'top 80%',
+          toggleActions: 'play none none none',
+          once: true
+        },
+        onComplete: () => {
+          gsap.set('.process-step', { willChange: 'auto' })
         }
       }
     )
-  })
+  }, [])
 
   const processSteps = [
     {
@@ -88,14 +100,14 @@ const ProcessSection = () => {
   ]
 
   return (
-    <section id="process" ref={sectionRef} className='min-h-screen section-dark text-white relative depth-3 section-transition'>
+    <section id="process" ref={sectionRef} className='min-h-screen section-dark text-white relative depth-3 section-transition gpu-accelerated'>
       <div className="cinematic-overlay"></div>
       <div className='container mx-auto section-padding'>
         <div className='text-center component-margin space-y-4 sm:space-y-6 lg:space-y-8'>
           <h2 className='process-title font-[font2] heading-responsive-xl uppercase mb-4 sm:mb-6 lg:mb-8 leading-tight text-layer-3 text-glow'>
             Our Process
           </h2>
-          <div className='floating-panel-dark max-width-content'>
+          <div className='floating-panel-dark max-width-content gpu-accelerated'>
             <p className='font-[font1] text-responsive leading-relaxed text-layer-2'>
             A clear, simple journey that makes sure your memories are turned into films worth keeping for a lifetime.
             </p>
@@ -108,10 +120,10 @@ const ProcessSection = () => {
               key={index}
               className='process-step group relative'
             >
-              <div className='floating-panel-dark glass-hover flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-6 lg:space-x-8'>
+              <div className='floating-panel-dark glass-hover flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-6 lg:space-x-8 gpu-accelerated'>
                 {/* Step Number */}
                 <div className='flex-shrink-0 self-center sm:self-start'>
-                  <div className='w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-[#D3FD50] to-[#b8e03e] rounded-full flex items-center justify-center micro-bounce glow-accent animate-glow-pulse'>
+                  <div className='w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-[#D3FD50] to-[#b8e03e] rounded-full flex items-center justify-center micro-bounce glow-accent animate-glow-pulse gpu-accelerated'>
                     <span className='font-[font2] text-lg sm:text-xl lg:text-2xl text-black'>
                       {step.step}
                     </span>
@@ -124,7 +136,7 @@ const ProcessSection = () => {
                     <h3 className='font-[font2] text-lg sm:text-xl lg:text-2xl uppercase text-layer-2'>
                       {step.title}
                     </h3>
-                    <span className='font-[font1] text-xs sm:text-sm lg:text-base text-layer-1 glass px-3 sm:px-4 py-1 sm:py-2 rounded-full micro-bounce self-center sm:self-auto'>
+                    <span className='font-[font1] text-xs sm:text-sm lg:text-base text-layer-1 glass px-3 sm:px-4 py-1 sm:py-2 rounded-full micro-bounce self-center sm:self-auto gpu-accelerated'>
                       {step.duration}
                     </span>
                   </div>

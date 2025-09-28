@@ -9,20 +9,28 @@ const PricingSection = () => {
   gsap.registerPlugin(ScrollTrigger)
 
   useGSAP(() => {
+    // Set initial states
+    gsap.set('.pricing-title', { opacity: 0, y: 30, willChange: 'transform, opacity' })
+    gsap.set('.pricing-card', { opacity: 0, y: 25, scale: 0.98, willChange: 'transform, opacity' })
+
     gsap.fromTo('.pricing-title',
       {
         opacity: 0,
-        y: 50
+        y: 30
       },
       {
         opacity: 1,
         y: 0,
-        duration: 1,
-        ease: "power2.out",
+        duration: 0.8,
+        ease: "cubic-bezier(0.16, 1, 0.3, 1)",
         scrollTrigger: {
           trigger: '.pricing-title',
-          start: 'top 80%',
-          toggleActions: 'play none none none'
+          start: 'top 85%',
+          toggleActions: 'play none none none',
+          once: true
+        },
+        onComplete: () => {
+          gsap.set('.pricing-title', { willChange: 'auto' })
         }
       }
     )
@@ -30,26 +38,30 @@ const PricingSection = () => {
     gsap.fromTo('.pricing-card',
       {
         opacity: 0,
-        y: 40,
-        scale: 0.95
+        y: 25,
+        scale: 0.98
       },
       {
         opacity: 1,
         y: 0,
         scale: 1,
-        duration: 0.8,
-        ease: "power2.out",
+        duration: 0.6,
+        ease: "cubic-bezier(0.16, 1, 0.3, 1)",
         stagger: {
-          amount: 0.4
+          amount: 0.3
         },
         scrollTrigger: {
           trigger: '.pricing-grid',
-          start: 'top 75%',
-          toggleActions: 'play none none none'
+          start: 'top 80%',
+          toggleActions: 'play none none none',
+          once: true
+        },
+        onComplete: () => {
+          gsap.set('.pricing-card', { willChange: 'auto' })
         }
       }
     )
-  })
+  }, [])
 
   const pricingPlans = [
     {
@@ -102,14 +114,14 @@ const PricingSection = () => {
   ]
 
   return (
-    <section id="pricing" ref={sectionRef} className='min-h-screen section-dark text-white relative depth-3 section-transition'>
+    <section id="pricing" ref={sectionRef} className='min-h-screen section-dark text-white relative depth-3 section-transition gpu-accelerated'>
       <div className="cinematic-overlay"></div>
       <div className='container mx-auto section-padding'>
         <div className='text-center component-margin space-y-4 sm:space-y-6 lg:space-y-8'>
           <h2 className='pricing-title font-[font2] heading-responsive-xl uppercase mb-4 sm:mb-6 lg:mb-8 leading-tight text-layer-3 text-glow'>
             Pricing
           </h2>
-          <div className='floating-panel-dark max-width-content'>
+          <div className='floating-panel-dark max-width-content gpu-accelerated'>
             <p className='font-[font1] text-responsive leading-relaxed text-layer-2'>
               Choisissez le forfait qui correspond parfaitement à votre vision et à votre budget.
             </p>
@@ -126,7 +138,7 @@ const PricingSection = () => {
             >
               {/* Popular Badge */}
               {plan.popular && (
-                <div className='absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-[#D3FD50] to-[#b8e03e] text-black px-4 sm:px-6 py-1 sm:py-2 rounded-full text-xs sm:text-sm font-[font2] uppercase tracking-wide glow-accent'>
+                <div className='absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-[#D3FD50] to-[#b8e03e] text-black px-4 sm:px-6 py-1 sm:py-2 rounded-full text-xs sm:text-sm font-[font2] uppercase tracking-wide glow-accent gpu-accelerated'>
                   Most Popular
                 </div>
               )}
@@ -185,7 +197,7 @@ const PricingSection = () => {
 
         {/* Additional Info */}
         <div className='text-center component-margin'>
-          <div className='floating-panel-dark max-width-content'>
+          <div className='floating-panel-dark max-width-content gpu-accelerated'>
             <p className='font-[font1] text-responsive text-layer-1 mb-4 sm:mb-6'>
               Tous les forfaits incluent une consultation gratuite et un devis personnalisé.
             </p>

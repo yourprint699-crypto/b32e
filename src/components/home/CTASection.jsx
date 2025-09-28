@@ -11,19 +11,19 @@ const CTASection = () => {
 
   // Memoize animation configuration for better performance
   const animationConfig = useMemo(() => ({
-    from: { opacity: 0, y: 40, visibility: 'hidden' },
+    from: { opacity: 0, y: 30, willChange: 'transform, opacity' },
     to: {
       opacity: 1,
       y: 0,
-      visibility: 'visible',
-      duration: 0.8,
-      ease: 'power2.out',
-      stagger: 0.2,
+      duration: 0.6,
+      ease: 'cubic-bezier(0.16, 1, 0.3, 1)',
+      stagger: 0.15,
     },
     scrollTrigger: {
       trigger: sectionRef.current,
       start: 'top 85%',
       toggleActions: 'play none none none',
+      once: true
     }
   }), [])
 
@@ -32,46 +32,23 @@ const CTASection = () => {
       const elements = gsap.utils.toArray('.cta-fade')
       if (!elements.length) return
 
+      // Set initial states
+      gsap.set(elements, animationConfig.from)
+
       gsap.fromTo(elements, animationConfig.from, {
         ...animationConfig.to,
         scrollTrigger: {
           ...animationConfig.scrollTrigger,
           trigger: sectionRef.current,
+        },
+        onComplete: () => {
+          gsap.set(elements, { willChange: 'auto' })
         }
       })
     }, sectionRef)
 
     return () => ctx.revert()
   }, [animationConfig])
-
-  // Optimized refresh handling with debouncing
-  useLayoutEffect(() => {
-    let refreshTimeout
-
-    const debouncedRefresh = () => {
-      clearTimeout(refreshTimeout)
-      refreshTimeout = setTimeout(() => {
-        requestAnimationFrame(() => {
-          ScrollTrigger.refresh()
-        })
-      }, 100)
-    }
-
-    const handleLoad = () => debouncedRefresh()
-    const handleResize = () => debouncedRefresh()
-
-    window.addEventListener('load', handleLoad, { passive: true })
-    window.addEventListener('resize', handleResize, { passive: true })
-
-    // Initial refresh
-    debouncedRefresh()
-
-    return () => {
-      window.removeEventListener('load', handleLoad)
-      window.removeEventListener('resize', handleResize)
-      clearTimeout(refreshTimeout)
-    }
-  }, [])
 
   // Memoized stats data for performance
   const statsData = useMemo(() => [
@@ -84,14 +61,14 @@ const CTASection = () => {
     <section
       id="cta"
       ref={sectionRef}
-      className="min-h-screen section-dark-alt text-white relative depth-3 flex items-center section-transition"
+      className="min-h-screen section-dark-alt text-white relative depth-3 flex items-center section-transition gpu-accelerated"
       role="region"
       aria-labelledby="cta-heading"
     >
       <div className="cinematic-overlay"></div>
       <div className="container mx-auto text-center w-full">
         <div className="max-width-wide">
-          <div className="floating-panel-dark space-y-8 sm:space-y-10 lg:space-y-12">
+          <div className="floating-panel-dark space-y-8 sm:space-y-10 lg:space-y-12 gpu-accelerated">
             <h2 
             id="cta-heading"
               className="cta-fade font-[font2] heading-responsive-xl uppercase mb-4 sm:mb-6 lg:mb-8 leading-tight text-layer-3 text-glow"
@@ -106,7 +83,7 @@ const CTASection = () => {
             <div className="cta-fade flex-col-mobile justify-center">
               <Link
               to="/contact"
-                className="btn-pill btn-primary h-12 sm:h-16 lg:h-20 px-8 sm:px-12 lg:px-16 inline-flex items-center justify-center group focus:outline-none"
+                className="btn-pill btn-primary h-12 sm:h-16 lg:h-20 px-8 sm:px-12 lg:px-16 inline-flex items-center justify-center group focus:outline-none gpu-accelerated"
               aria-label="Get started with our wedding videography services"
               >
                 <span className="font-[font2] text-base sm:text-xl lg:text-2xl">
@@ -116,7 +93,7 @@ const CTASection = () => {
 
               <Link
               to="/projects"
-                className="btn-pill btn-secondary h-12 sm:h-16 lg:h-20 px-8 sm:px-12 lg:px-16 inline-flex items-center justify-center group focus:outline-none"
+                className="btn-pill btn-secondary h-12 sm:h-16 lg:h-20 px-8 sm:px-12 lg:px-16 inline-flex items-center justify-center group focus:outline-none gpu-accelerated"
               aria-label="View our wedding videography portfolio"
               >
                 <span className="font-[font2] text-base sm:text-xl lg:text-2xl">
@@ -127,7 +104,7 @@ const CTASection = () => {
 
             <div className="cta-fade responsive-grid-3 text-center">
               {statsData.map((stat, index) => (
-                <div key={stat.label} className="floating-panel-dark glass-hover space-y-3 sm:space-y-4">
+                <div key={stat.label} className="floating-panel-dark glass-hover space-y-3 sm:space-y-4 gpu-accelerated">
                   <div className="text-2xl sm:text-3xl lg:text-4xl font-[font2] text-[#D3FD50] glow-accent text-layer-2 text-glow-strong">
                   {stat.value}
                   </div>

@@ -9,25 +9,11 @@ const AboutSection = () => {
   gsap.registerPlugin(ScrollTrigger)
 
   useGSAP(() => {
-    gsap.fromTo('.about-title',
-      {
-        opacity: 0,
-        y: 50
-      },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: '.about-title',
-          start: 'top 80%',
-          toggleActions: 'play none none none'
-        }
-      }
-    )
+    // Set initial states to prevent flash
+    gsap.set('.about-title', { opacity: 0, y: 30, willChange: 'transform, opacity' })
+    gsap.set('.about-content', { opacity: 0, y: 20, willChange: 'transform, opacity' })
 
-    gsap.fromTo('.about-content',
+    gsap.fromTo('.about-title',
       {
         opacity: 0,
         y: 30
@@ -36,18 +22,44 @@ const AboutSection = () => {
         opacity: 1,
         y: 0,
         duration: 0.8,
-        ease: "power2.out",
-        stagger: {
-          amount: 0.3
-        },
+        ease: "cubic-bezier(0.16, 1, 0.3, 1)",
         scrollTrigger: {
-          trigger: '.about-grid',
-          start: 'top 75%',
-          toggleActions: 'play none none none'
+          trigger: '.about-title',
+          start: 'top 85%',
+          toggleActions: 'play none none none',
+          once: true
+        },
+        onComplete: () => {
+          gsap.set('.about-title', { willChange: 'auto' })
         }
       }
     )
-  })
+
+    gsap.fromTo('.about-content',
+      {
+        opacity: 0,
+        y: 20
+      },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: "cubic-bezier(0.16, 1, 0.3, 1)",
+        stagger: {
+          amount: 0.2
+        },
+        scrollTrigger: {
+          trigger: '.about-grid',
+          start: 'top 80%',
+          toggleActions: 'play none none none',
+          once: true
+        },
+        onComplete: () => {
+          gsap.set('.about-content', { willChange: 'auto' })
+        }
+      }
+    )
+  }, [])
 
   return (
     <section id="about" ref={sectionRef} className='min-h-screen section-dark-alt text-white relative depth-3 section-transition'>
@@ -95,7 +107,7 @@ const AboutSection = () => {
           {/* Values Grid */}
           <div className='responsive-grid-3'>
             <div className='about-content text-center space-y-4'>
-              <div className='floating-panel-dark glass-hover space-y-4 sm:space-y-6'>
+              <div className='floating-panel-dark glass-hover space-y-4 sm:space-y-6 gpu-accelerated'>
                 <div className='text-3xl sm:text-4xl lg:text-5xl mb-3 sm:mb-4 micro-bounce glow-accent'>🎯</div>
                 <h4 className='font-[font2] text-lg sm:text-xl lg:text-2xl uppercase text-layer-2'>
                 Vision
@@ -107,7 +119,7 @@ const AboutSection = () => {
             </div>
 
             <div className='about-content text-center space-y-4'>
-              <div className='floating-panel-dark glass-hover space-y-4 sm:space-y-6'>
+              <div className='floating-panel-dark glass-hover space-y-4 sm:space-y-6 gpu-accelerated'>
                 <div className='text-3xl sm:text-4xl lg:text-5xl mb-3 sm:mb-4 micro-bounce glow-accent'>💎</div>
                 <h4 className='font-[font2] text-lg sm:text-xl lg:text-2xl uppercase text-layer-2'>
                 Mission
@@ -119,7 +131,7 @@ const AboutSection = () => {
             </div>
 
             <div className='about-content text-center space-y-4'>
-              <div className='floating-panel-dark glass-hover space-y-4 sm:space-y-6'>
+              <div className='floating-panel-dark glass-hover space-y-4 sm:space-y-6 gpu-accelerated'>
                 <div className='text-3xl sm:text-4xl lg:text-5xl mb-3 sm:mb-4 micro-bounce glow-accent'>⚡</div>
                 <h4 className='font-[font2] text-lg sm:text-xl lg:text-2xl uppercase text-layer-2'>
                 Values

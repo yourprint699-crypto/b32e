@@ -38,13 +38,13 @@ const StatsSection = () => {
   gsap.registerPlugin(ScrollTrigger)
 
   // Counter animation function
-  const animateCounter = (element, finalNumber, duration = 2) => {
+  const animateCounter = (element, finalNumber, duration = 1.8) => {
     const counter = { value: 0 }
     
     gsap.to(counter, {
       value: finalNumber,
       duration: duration,
-      ease: "power2.out",
+      ease: "cubic-bezier(0.16, 1, 0.3, 1)",
       onUpdate: () => {
         element.textContent = Math.floor(counter.value).toLocaleString()
       }
@@ -52,21 +52,29 @@ const StatsSection = () => {
   }
 
   useGSAP(() => {
+    // Set initial states
+    gsap.set('.stats-title', { opacity: 0, y: 30, willChange: 'transform, opacity' })
+    gsap.set('.stat-card', { opacity: 0, y: 25, scale: 0.98, willChange: 'transform, opacity' })
+
     // Animate section title
     gsap.fromTo('.stats-title',
       {
         opacity: 0,
-        y: 50
+        y: 30
       },
       {
         opacity: 1,
         y: 0,
-        duration: 1,
-        ease: "power2.out",
+        duration: 0.8,
+        ease: "cubic-bezier(0.16, 1, 0.3, 1)",
         scrollTrigger: {
           trigger: '.stats-title',
-          start: 'top 80%',
-          toggleActions: 'play none none none'
+          start: 'top 85%',
+          toggleActions: 'play none none none',
+          once: true
+        },
+        onComplete: () => {
+          gsap.set('.stats-title', { willChange: 'auto' })
         }
       }
     )
@@ -75,40 +83,44 @@ const StatsSection = () => {
     gsap.fromTo('.stat-card',
       {
         opacity: 0,
-        y: 40,
-        scale: 0.95
+        y: 25,
+        scale: 0.98
       },
       {
         opacity: 1,
         y: 0,
         scale: 1,
-        duration: 0.8,
-        ease: "power2.out",
+        duration: 0.6,
+        ease: "cubic-bezier(0.16, 1, 0.3, 1)",
         stagger: {
-          amount: 0.3
+          amount: 0.25
         },
         scrollTrigger: {
           trigger: '.stats-grid',
-          start: 'top 75%',
+          start: 'top 80%',
           toggleActions: 'play none none none',
+          once: true,
           onEnter: () => {
             if (!hasAnimated) {
               // Trigger counter animations
               setTimeout(() => {
                 document.querySelectorAll('.counter-number').forEach((counter, index) => {
-                  animateCounter(counter, statsData[index].number, 2.5)
+                  animateCounter(counter, statsData[index].number, 2)
                 })
                 setHasAnimated(true)
               }, 400)
             }
           }
+        },
+        onComplete: () => {
+          gsap.set('.stat-card', { willChange: 'auto' })
         }
       }
     )
   }, [hasAnimated])
 
   return (
-    <section id="stats" ref={sectionRef} className='min-h-screen section-dark text-white relative depth-3 section-transition'>
+    <section id="stats" ref={sectionRef} className='min-h-screen section-dark text-white relative depth-3 section-transition gpu-accelerated'>
       <div className="cinematic-overlay"></div>
       <div className='container mx-auto section-padding'>
         {/* Section Header */}
@@ -132,7 +144,7 @@ const StatsSection = () => {
               
               {/* Number */}
               <div className='mb-4 sm:mb-6'>
-                <span className='counter-number font-[font2] text-layer-2 glow-accent text-glow-strong' style={{background: 'none', backgroundColor: 'transparent'}}>
+                <span className='counter-number font-[font2] text-3xl sm:text-4xl lg:text-5xl text-layer-2 glow-accent text-glow-strong'>
                   0
                 </span>
                 <span className='font-[font2] text-3xl sm:text-4xl lg:text-5xl text-layer-2 glow-accent text-glow-strong' style={{background: 'none', backgroundColor: 'transparent'}}>

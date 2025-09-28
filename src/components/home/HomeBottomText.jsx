@@ -1,7 +1,7 @@
 import React from 'react';
 
 const HomeBottomText = () => {
-  return null; // Removed for mobile optimization
+  return null; // Component removed for mobile optimization - no changes needed
 };
 
 export default HomeBottomText;

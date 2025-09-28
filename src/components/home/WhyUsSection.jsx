@@ -10,29 +10,14 @@ const WhyUsSection = () => {
   gsap.registerPlugin(ScrollTrigger);
 
   useGSAP(() => {
+    // Set initial states
+    gsap.set('.why-us-title', { opacity: 0, y: 30, willChange: 'transform, opacity' })
+    gsap.set('.intro-text', { opacity: 0, y: 20, willChange: 'transform, opacity' })
+    gsap.set('.benefit-card', { opacity: 0, y: 25, scale: 0.98, willChange: 'transform, opacity' })
+
     // Animate section title
     gsap.fromTo(
       '.why-us-title',
-      {
-        opacity: 0,
-        y: 50,
-      },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: '.why-us-title',
-          start: 'top 80%',
-          toggleActions: 'play none none none',
-        },
-      }
-    );
-
-    // Animate intro text
-    gsap.fromTo(
-      '.intro-text',
       {
         opacity: 0,
         y: 30,
@@ -41,13 +26,41 @@ const WhyUsSection = () => {
         opacity: 1,
         y: 0,
         duration: 0.8,
-        ease: 'power2.out',
-        delay: 0.2,
+        ease: 'cubic-bezier(0.16, 1, 0.3, 1)',
+        scrollTrigger: {
+          trigger: '.why-us-title',
+          start: 'top 85%',
+          toggleActions: 'play none none none',
+          once: true
+        },
+        onComplete: () => {
+          gsap.set('.why-us-title', { willChange: 'auto' })
+        }
+      }
+    );
+
+    // Animate intro text
+    gsap.fromTo(
+      '.intro-text',
+      {
+        opacity: 0,
+        y: 20,
+      },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: 'cubic-bezier(0.16, 1, 0.3, 1)',
+        delay: 0.15,
         scrollTrigger: {
           trigger: '.intro-text',
-          start: 'top 80%',
+          start: 'top 85%',
           toggleActions: 'play none none none',
+          once: true
         },
+        onComplete: () => {
+          gsap.set('.intro-text', { willChange: 'auto' })
+        }
       }
     );
 
@@ -56,26 +69,30 @@ const WhyUsSection = () => {
       '.benefit-card',
       {
         opacity: 0,
-        y: 40,
-        scale: 0.95,
+        y: 25,
+        scale: 0.98,
       },
       {
         opacity: 1,
         y: 0,
         scale: 1,
-        duration: 0.8,
-        ease: 'power2.out',
+        duration: 0.6,
+        ease: 'cubic-bezier(0.16, 1, 0.3, 1)',
         stagger: {
-          amount: 0.4,
+          amount: 0.3,
         },
         scrollTrigger: {
           trigger: '.benefits-grid',
-          start: 'top 75%',
+          start: 'top 80%',
           toggleActions: 'play none none none',
+          once: true
         },
+        onComplete: () => {
+          gsap.set('.benefit-card', { willChange: 'auto' })
+        }
       }
     );
-  });
+  }, []);
 
   const benefits = [
     {
@@ -107,7 +124,7 @@ const WhyUsSection = () => {
   return (
     <section
       id="why-us"
-      className="min-h-screen section-dark text-white relative depth-3 section-transition"
+      className="min-h-screen section-dark text-white relative depth-3 section-transition gpu-accelerated"
     >
       <div className="cinematic-overlay"></div>
       <div className="container mx-auto section-padding">
@@ -116,7 +133,7 @@ const WhyUsSection = () => {
           <h2 className="why-us-title font-[font2] heading-responsive-xl uppercase mb-4 sm:mb-6 lg:mb-8 leading-tight text-layer-3 text-glow">
           Get to Know the Amoura Promise
           </h2>
-          <div className="floating-panel-dark max-width-content">
+          <div className="floating-panel-dark max-width-content gpu-accelerated">
             <p className="intro-text font-[font1] text-responsive leading-relaxed text-layer-2">
             Creative • Reliable • Timely
             </p>
